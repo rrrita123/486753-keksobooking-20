@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Маргарита Фисун](https://up.htmlacademy.ru/javascript/20/user/486753).
-* Наставник: `Неизвестно`.
+* Наставник: [Богдан Звягинцев](https://up.htmlacademy.ru/javascript/20/user/52757).
 
 ---
 
