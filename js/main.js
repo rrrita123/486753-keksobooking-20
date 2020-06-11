@@ -3,6 +3,7 @@
 var PRICE_FROM = 500;
 var PRICE_TO = 3000;
 var TYPE_OFFER = ['palace', 'flat', 'house', 'bungalo'];
+var TYPE_VALUES = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
 var CHECKIN_OFFER = ['12:00', '13:00', '14:00'];
 var CHECKOUT_OFFER = ['12:00', '13:00', '14:00'];
 var FEATURES_OFFER = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -33,11 +34,11 @@ var createArrRandom = function (array) {
 };
 
 // Создание массива из объектов
-var createArr = function () {
+var createArr = function (countObject) {
   var offers = [];
   var widthMap = document.querySelector('.map').offsetWidth;
 
-  for (var i = 0; i < 8; i++) {
+  for (var i = 0; i < countObject; i++) {
     var locationX = getRandom(0, widthMap);
     var locationY = getRandom(LOCATION_Y_FROM, LOCATION_Y_TO);
 
@@ -72,7 +73,7 @@ var createArr = function () {
 
 document.querySelector('.map').classList.remove('map--faded');
 
-var offerArr = createArr();
+var offerArr = createArr(8);
 var mark = document.querySelector('#pin').content;
 
 // Создание меток из шаблона, заполнение их данными
@@ -100,3 +101,44 @@ var renderMarks = function () {
 };
 
 renderMarks();
+
+// Модальное окно с информацией об объявлении, заполнение данными
+var mapCard = document.querySelector('#card').content;
+
+var createCard = function (map) {
+  var cloneCardElement = mapCard.cloneNode(true);
+
+  cloneCardElement.querySelector('.popup__title').textContent = map.offer.title;
+  cloneCardElement.querySelector('.popup__text--address').textContent = map.offer.address;
+  cloneCardElement.querySelector('.popup__text--price').textContent = map.offer.price + '₽/ночь';
+  cloneCardElement.querySelector('.popup__type').textContent = TYPE_VALUES[TYPE_OFFER.indexOf(map.offer.type)];
+  cloneCardElement.querySelector('.popup__text--capacity').textContent = map.offer.rooms + ' комнаты для ' + map.offer.guests + ' гостей';
+  cloneCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + map.offer.checkin + ', выезд до ' + map.offer.checkout;
+
+  for (var i = 0; i < FEATURES_OFFER.length; i++) {
+    if (FEATURES_OFFER[i].indexOf(map.offer.features[i]) < 0) {
+      cloneCardElement.querySelector('.popup__feature--' + FEATURES_OFFER[i]).classList.add('hidden');
+    }
+  }
+
+  cloneCardElement.querySelector('.popup__description').textContent = map.offer.description;
+
+  var popupPhoto = cloneCardElement.querySelector('.popup__photos');
+
+  for (i = 0; i < map.offer.photos.length; i++) {
+    if (i > 0) {
+      var photoClone = cloneCardElement.querySelector('.popup__photo').cloneNode();
+      photoClone.src = map.offer.photos[i];
+      popupPhoto.appendChild(photoClone);
+    } else {
+      popupPhoto.querySelector('.popup__photo').src = map.offer.photos[i];
+    }
+  }
+
+  cloneCardElement.querySelector('.popup__avatar').src = map.author.avatar;
+
+  return cloneCardElement;
+};
+
+document.querySelector('.map__filters-container').before(createCard(offerArr[0]));
+
