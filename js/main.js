@@ -111,20 +111,11 @@ var createCard = function (map) {
   cloneCardElement.querySelector('.popup__title').textContent = map.offer.title;
   cloneCardElement.querySelector('.popup__text--address').textContent = map.offer.address;
   cloneCardElement.querySelector('.popup__text--price').textContent = map.offer.price + '₽/ночь';
-
-  for (var i = 0; i < TYPE_OFFER.length; i++) {
-    if (map.offer.type === TYPE_OFFER[i]) {
-      var typeOfferIndex = i;
-      var typeValue = TYPE_VALUES[typeOfferIndex];
-    }
-  }
-
-  cloneCardElement.querySelector('.popup__type').textContent = typeValue;
-
+  cloneCardElement.querySelector('.popup__type').textContent = TYPE_VALUES[TYPE_OFFER.indexOf(map.offer.type)];
   cloneCardElement.querySelector('.popup__text--capacity').textContent = map.offer.rooms + ' комнаты для ' + map.offer.guests + ' гостей';
   cloneCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + map.offer.checkin + ', выезд до ' + map.offer.checkout;
 
-  for (i = 0; i < FEATURES_OFFER.length; i++) {
+  for (var i = 0; i < FEATURES_OFFER.length; i++) {
     if (FEATURES_OFFER[i].indexOf(map.offer.features[i]) < 0) {
       cloneCardElement.querySelector('.popup__feature--' + FEATURES_OFFER[i]).classList.add('hidden');
     }
