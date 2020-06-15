@@ -103,11 +103,11 @@ var renderMarks = function () {
 };
 
 var mapPinActive = document.querySelector('.map__pin--main');
-
+var inputAddress = document.querySelector('#address');
 
 // Полуение координат главной метки
+
 var getAddressMarkMain = function (state) {
-  var inputAddress = document.querySelector('#address');
   var markMainLeft = parseInt(mapPinActive.style.left, 10);
   var markMainTop = parseInt(mapPinActive.style.top, 10);
   if (state === true) {
@@ -143,14 +143,12 @@ var setInactiveState = function () {
   getAddressMarkMain(false);
 };
 
-// setInactiveState(); //!!!!!!!!!!!!!!!!!!
-
+setInactiveState();
 
 // Обработчик клика левой кнопки мыши
 var onMouseClick = function (evt) {
   if (evt.button === 0) {
     setActiveState();
-    // getAddressMarkMain(true);
     mapPinActive.removeEventListener('mousedown', onMouseClick);
   }
 };
@@ -161,7 +159,6 @@ mapPinActive.addEventListener('mousedown', onMouseClick);
 var onPinEnterPress = function (evt) {
   if (evt.key === 'Enter') {
     setActiveState();
-    // getAddressMarkMain(true);
   }
   mapPinActive.removeEventListener('keydown', onPinEnterPress);
 };
@@ -176,67 +173,38 @@ var setActiveState = function () {
   setStateCollection(selectsMapFilter, false);
   setStateCollection(fieldsetsAdForm, false);
   getAddressMarkMain(true);
+  onInputRoomChange();
 
   renderMarks();
 };
 
+var capacityElement = document.querySelector('#capacity');
+var capacityCollectionElements = capacityElement.querySelectorAll('option');
+var roomNumberElement = document.querySelector('#room_number');
 
-//  Обработчик соответствия количества гостей (спальных мест) с количеством комнат
-var onInputRoomChange = function () {
-  var capacityElement = document.querySelector('#capacity');
-
-  if (roomNumberElement.value === '1') {
-    capacityElement.querySelector('option[value="1"]').classList.remove('hidden');
-
-    capacityElement.querySelector('option[value="0"]').classList.add('hidden');
-    capacityElement.querySelector('option[value="2"]').classList.add('hidden');
-    capacityElement.querySelector('option[value="3"]').classList.add('hidden');
-
-    capacityElement.value = 1;
-  } else if ((roomNumberElement.value === '2')) {
-
-    capacityElement.querySelector('option[value="3"]').classList.add('hidden');
-    capacityElement.querySelector('option[value="0"]').classList.add('hidden');
-
-    capacityElement.querySelector('option[value="1"]').classList.remove('hidden');
-    capacityElement.querySelector('option[value="2"]').classList.remove('hidden');
-
-    capacityElement.value = 2;
-  } else if ((roomNumberElement.value === '3')) {
-
-    capacityElement.querySelector('option[value="0"]').classList.add('hidden');
-
-    capacityElement.querySelector('option[value="1"]').classList.remove('hidden');
-    capacityElement.querySelector('option[value="2"]').classList.remove('hidden');
-    capacityElement.querySelector('option[value="3"]').classList.remove('hidden');
-
-    capacityElement.value = 3;
-  } else if ((roomNumberElement.value === '100')) {
-
-    capacityElement.querySelector('option[value="1"]').classList.add('hidden');
-    capacityElement.querySelector('option[value="2"]').classList.add('hidden');
-    capacityElement.querySelector('option[value="3"]').classList.add('hidden');
-
-    capacityElement.querySelector('option[value="0"]').classList.remove('hidden');
-
-    capacityElement.value = 0;
+// Удаляет класс hidden у поля "количества гостей"
+var removeClassOnOption = function (element) {
+  for (var i = 1; i <= element; i++) {
+    capacityElement.querySelector('option[value="' + i + '"]').classList.remove('hidden');
   }
-
-
-  console.log(roomNumberElement.value);
+  capacityElement.value = element;
 };
 
+// Функция обработчик сравнивает количества гостей с количеством комнат
+var onInputRoomChange = function () {
+  for (var i = 0; i < capacityCollectionElements.length; i++) {
+    capacityCollectionElements[i].classList.add('hidden');
+  }
 
+  if (roomNumberElement.value !== '100') {
+    removeClassOnOption(roomNumberElement.value);
+  } else {
+    capacityElement.querySelector('option[value="0"]').classList.remove('hidden');
+    capacityElement.value = 0;
+  }
+};
 
-var roomNumberElement = document.querySelector('#room_number');
 roomNumberElement.addEventListener('change', onInputRoomChange);
-
-setActiveState(); // DEL!!!
-onInputRoomChange();
-
-
-
-
 
 // -----------------------------------------------------------------------------------------------------------
 
