@@ -105,14 +105,15 @@ var renderMarks = function () {
 var mapPinActive = document.querySelector('.map__pin--main');
 var inputAddress = document.querySelector('#address');
 
-// Полуение координат главной метки
-
+// Получение координат главной метки
 var getAddressMarkMain = function (state) {
   var markMainLeft = parseInt(mapPinActive.style.left, 10);
   var markMainTop = parseInt(mapPinActive.style.top, 10);
+  var markMainX = 0;
+  var markMainY = 0;
   if (state === true) {
-    var markMainX = Math.round(markMainLeft + (WIDTH_MARK_FIRST * 0.5));
-    var markMainY = Math.round(markMainTop + HEIGHT_MARK_FIRST);
+    markMainX = Math.round(markMainLeft + (WIDTH_MARK_FIRST * 0.5));
+    markMainY = Math.round(markMainTop + HEIGHT_MARK_FIRST);
   } else {
     markMainX = Math.round(markMainLeft + (WIDTH_MARK_MAIN * 0.5));
     markMainY = Math.round(markMainTop + (HEIGHT_MARK_MAIN * 0.5));
@@ -141,9 +142,8 @@ var setInactiveState = function () {
   setStateCollection(selectsMapFilter, true);
 
   getAddressMarkMain(false);
+  onInputRoomChange();
 };
-
-setInactiveState();
 
 // Обработчик клика левой кнопки мыши
 var onMouseClick = function (evt) {
@@ -182,27 +182,27 @@ var capacityElement = document.querySelector('#capacity');
 var capacityCollectionElements = capacityElement.querySelectorAll('option');
 var roomNumberElement = document.querySelector('#room_number');
 
-// Удаляет класс hidden у поля "количества гостей"
-var removeClassOnOption = function (element) {
-  for (var i = 1; i <= element; i++) {
-    capacityElement.querySelector('option[value="' + i + '"]').classList.remove('hidden');
-  }
-  capacityElement.value = element;
-};
-
-// Функция обработчик сравнивает количества гостей с количеством комнат
+// Функция обработчик сравнивает количество гостей с количеством комнат
 var onInputRoomChange = function () {
   for (var i = 0; i < capacityCollectionElements.length; i++) {
-    capacityCollectionElements[i].classList.add('hidden');
-  }
 
-  if (roomNumberElement.value !== '100') {
-    removeClassOnOption(roomNumberElement.value);
-  } else {
-    capacityElement.querySelector('option[value="0"]').classList.remove('hidden');
-    capacityElement.value = 0;
+    if (roomNumberElement.value === '100' && capacityCollectionElements[i].value === '0') {
+      capacityCollectionElements[i].classList.remove('hidden');
+      capacityElement.value = capacityCollectionElements[i].value;
+    } else if (roomNumberElement.value !== '100' && capacityCollectionElements[i].value <= roomNumberElement.value) {
+      if (capacityCollectionElements[i].value === '0') {
+        capacityCollectionElements[i].classList.add('hidden');
+      } else {
+        capacityCollectionElements[i].classList.remove('hidden');
+        capacityElement.value = capacityCollectionElements[i].value;
+      }
+    } else {
+      capacityCollectionElements[i].classList.add('hidden');
+    }
   }
 };
+
+setInactiveState();
 
 roomNumberElement.addEventListener('change', onInputRoomChange);
 
