@@ -109,8 +109,8 @@ var inputAddress = document.querySelector('#address');
 var getAddressMarkMain = function (state) {
   var markMainLeft = parseInt(mapPinActive.style.left, 10);
   var markMainTop = parseInt(mapPinActive.style.top, 10);
-  var markMainX = 0;
-  var markMainY = 0;
+  var markMainX;
+  var markMainY;
   if (state === true) {
     markMainX = Math.round(markMainLeft + (WIDTH_MARK_FIRST * 0.5));
     markMainY = Math.round(markMainTop + HEIGHT_MARK_FIRST);
@@ -184,18 +184,15 @@ var roomNumberElement = document.querySelector('#room_number');
 
 // Функция обработчик сравнивает количество гостей с количеством комнат
 var onInputRoomChange = function () {
+  var numberSeats;
   for (var i = 0; i < capacityCollectionElements.length; i++) {
-
-    if (roomNumberElement.value === '100' && capacityCollectionElements[i].value === '0') {
+    numberSeats = capacityCollectionElements[i].value;
+    if (roomNumberElement.value === '100' && numberSeats === '0') {
       capacityCollectionElements[i].classList.remove('hidden');
-      capacityElement.value = capacityCollectionElements[i].value;
-    } else if (roomNumberElement.value !== '100' && capacityCollectionElements[i].value <= roomNumberElement.value) {
-      if (capacityCollectionElements[i].value === '0') {
-        capacityCollectionElements[i].classList.add('hidden');
-      } else {
-        capacityCollectionElements[i].classList.remove('hidden');
-        capacityElement.value = capacityCollectionElements[i].value;
-      }
+      capacityElement.value = numberSeats;
+    } else if (roomNumberElement.value !== '100' && numberSeats <= roomNumberElement.value && numberSeats !== '0') {
+      capacityCollectionElements[i].classList.remove('hidden');
+      capacityElement.value = numberSeats;
     } else {
       capacityCollectionElements[i].classList.add('hidden');
     }
