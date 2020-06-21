@@ -1,12 +1,12 @@
 'use strict';
 
-// Создание меток из шаблона, заполнение их данными
-var WIDTH_MARK = 50;
-var HEIGHT_MARK = 70;
-
-var markElement = document.querySelector('#pin').content;
-
 window.pin = (function () {
+  // Создание меток из шаблона, заполнение их данными
+  var WIDTH_MARK = 50;
+  var HEIGHT_MARK = 70;
+
+  var markElement = document.querySelector('#pin').content;
+
   return {
     createMarks: function (pin) {
       var cloneMarkElement = markElement.cloneNode(true);
