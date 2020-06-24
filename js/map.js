@@ -12,16 +12,13 @@ window.map = (function () {
   var mapPinMainElenemt = document.querySelector('.map__pin--main');
   var inputAddressElement = document.querySelector('#address');
 
-  // Добавляет на страницу карточку
-  // document.querySelector('.map__filters-container').before(window.card.createCard(offerArr[0]));
-
   return {
     // Отрисовка меток на карте с помощью DocumentFragment
     renderMarks: function () {
       var fragment = document.createDocumentFragment();
 
       for (var i = 0; i < offerArr.length; i++) {
-        fragment.appendChild(window.pin.createMarks(offerArr[i]));
+        fragment.appendChild(window.pin.createMark(offerArr[i], i));
       }
 
       mapPinsElement.appendChild(fragment);
@@ -43,6 +40,9 @@ window.map = (function () {
 
       inputAddressElement.value = markMainX + ', ' + markMainY;
     },
+
+    offerArr: offerArr,
+    mapPinsElement: mapPinsElement
 
   };
 })();
