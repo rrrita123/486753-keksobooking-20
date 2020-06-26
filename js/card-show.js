@@ -4,21 +4,32 @@
 window.cardShow = (function () {
   // Отслеживает клик по метке, получает ее индекс
   window.map.mapPinsElement.addEventListener('click', function (evt) {
-    if (!(evt.target.parentElement.classList.contains('map__pin--main'))) {
-      if (evt.target.parentElement.classList.contains('map__pin') || (evt.target.classList.contains('map__pin'))) {
-        var dataIndex = (evt.target.parentElement.getAttribute('data-index')) || (evt.target.getAttribute('data-index'));
-        if (document.querySelector('.map__card')) {
-          var mapCardElement = document.querySelector('.map__card');
-          document.querySelector('.map').removeChild(mapCardElement);
-        }
-        openCard(dataIndex);
+    if (evt.target.parentElement.classList.contains('map__pin--main')) {
+      return;
+    }
+
+    if (evt.target.parentElement.classList.contains('map__pin') || (evt.target.classList.contains('map__pin'))) {
+      var dataIndexPin = (evt.target.parentElement.getAttribute('data-index')) || (evt.target.getAttribute('data-index'));
+      if (dataIndexPin) {
+        openCard(dataIndexPin);
       }
     }
   });
 
   // Выводит карточку с данными одного предложения
   var openCard = function (dataIndex) {
+    var mapCardElement = document.querySelector('.map__card');
+    if (mapCardElement) {
+      if (mapCardElement.getAttribute('dataIndex') === dataIndex.toString(10)) {
+        return;
+      }
+
+      document.querySelector('.map').removeChild(mapCardElement);
+    }
+
     document.querySelector('.map__filters-container').before(window.card.createCard(window.map.offerArr[dataIndex]));
+    mapCardElement = document.querySelector('.map__card');
+    mapCardElement.setAttribute('dataIndex', dataIndex);
 
     var closeCardElement = document.querySelector('.popup__close');
     closeCardElement.addEventListener('click', onCardClose);
@@ -35,7 +46,7 @@ window.cardShow = (function () {
     window.util.isEscEvent(evt, closeCard);
   };
 
-  // Зактывает карточку
+  // Закрывает карточку
   var closeCard = function () {
     var mapCardElement = document.querySelector('.map__card');
     document.querySelector('.map').removeChild(mapCardElement);
