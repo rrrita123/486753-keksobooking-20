@@ -20,16 +20,16 @@ window.cardShow = (function () {
   var openCard = function (dataIndex) {
     var mapCardElement = document.querySelector('.map__card');
     if (mapCardElement) {
-      if (mapCardElement.getAttribute('dataIndex') === dataIndex.toString(10)) {
+      if (mapCardElement.getAttribute('data-index') === dataIndex) {
         return;
       }
 
-      document.querySelector('.map').removeChild(mapCardElement);
+      closeCard();
     }
 
     document.querySelector('.map__filters-container').before(window.card.createCard(window.map.offerArr[dataIndex]));
     mapCardElement = document.querySelector('.map__card');
-    mapCardElement.setAttribute('dataIndex', dataIndex);
+    mapCardElement.setAttribute('data-index', dataIndex);
 
     var closeCardElement = document.querySelector('.popup__close');
     closeCardElement.addEventListener('click', onCardClose);
