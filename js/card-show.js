@@ -20,11 +20,11 @@ window.cardShow = (function () {
   var openCard = function (dataIndex) {
     var mapCardElement = document.querySelector('.map__card');
     if (mapCardElement) {
-      if (mapCardElement.getAttribute('data-index') === dataIndex) {
+      if (mapCardElement.getAttribute('data-index') === dataIndex) { // Изменение атрибута data-
         return;
       }
 
-      closeCard();
+      closeCard(); // Закытие карточки
     }
 
     document.querySelector('.map__filters-container').before(window.card.createCard(window.map.offerArr[dataIndex]));
