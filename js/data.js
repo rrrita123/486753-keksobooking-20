@@ -32,11 +32,12 @@ window.data = (function () {
     return featuresArr;
   };
 
+  var widthMapElement = document.querySelector('.map').offsetWidth;
+
   // Создание массива из объектов
   return {
     createArr: function (countObject) {
       var offers = [];
-      var widthMapElement = document.querySelector('.map').offsetWidth;
 
       for (var i = 0; i < countObject; i++) {
         var locationX = getRandom(0, widthMapElement);
@@ -74,7 +75,10 @@ window.data = (function () {
     TYPES_OFFER: TYPES_OFFER,
     FEATURES_OFFER: FEATURES_OFFER,
     TIMES_CHECKIN: TIMES_CHECKIN,
-    TIMES_CHECKOUT: TIMES_CHECKOUT
+    TIMES_CHECKOUT: TIMES_CHECKOUT,
+    LOCATION_Y_FROM: LOCATION_Y_FROM,
+    LOCATION_Y_TO: LOCATION_Y_TO,
+    widthMapElement: widthMapElement
   };
 
 })();

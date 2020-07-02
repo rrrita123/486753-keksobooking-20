@@ -41,5 +41,6 @@ window.main = (function () {
     window.map.getAddressMarkMain(true);
     window.form.onInputRoomChange();
     window.map.renderMarks();
+    // window.backend.load(window.map.onSuccess);
   };
 })();
