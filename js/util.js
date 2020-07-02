@@ -8,6 +8,12 @@ window.util = (function () {
       }
     },
 
+    isEscEvent: function (evt, action) {
+      if (evt.key === 'Escape') {
+        action();
+      }
+    },
+
     // Нажатие левой кнопки мыши
     isLeftButtomMouse: function (evt, action) {
       if (evt.button === 0) {
