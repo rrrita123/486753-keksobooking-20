@@ -3,8 +3,10 @@
 // Модуль, который создает карточки объявлений
 window.card = (function () {
   var TYPES_VALUES = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
+  var FEATURES_OFFER = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
   var mapCardElement = document.querySelector('#card').content;
+
 
   return {
     createCard: function (map) {
@@ -17,9 +19,13 @@ window.card = (function () {
       cloneCardElement.querySelector('.popup__text--capacity').textContent = map.offer.rooms + ' комнаты для ' + map.offer.guests + ' гостей';
       cloneCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + map.offer.checkin + ', выезд до ' + map.offer.checkout;
 
-      for (var i = 0; i < window.data.FEATURES_OFFER.length; i++) {
-        if (window.data.FEATURES_OFFER[i].indexOf(map.offer.features[i]) < 0) {
-          cloneCardElement.querySelector('.popup__feature--' + window.data.FEATURES_OFFER[i]).classList.add('hidden');
+      if (map.offer.features.length === 0) {
+        cloneCardElement.querySelector('.popup__features').classList.add('hidden');
+      } else {
+        for (var i = 0; i < FEATURES_OFFER.length; i++) {
+          if (map.offer.features.indexOf(FEATURES_OFFER[i]) < 0) {
+            cloneCardElement.querySelector('.popup__feature--' + FEATURES_OFFER[i]).classList.add('hidden');
+          }
         }
       }
 
@@ -27,13 +33,17 @@ window.card = (function () {
 
       var popupPhotoElement = cloneCardElement.querySelector('.popup__photos');
 
-      for (i = 0; i < map.offer.photos.length; i++) {
-        if (i > 0) {
-          var photoClone = cloneCardElement.querySelector('.popup__photo').cloneNode();
-          photoClone.src = map.offer.photos[i];
-          popupPhotoElement.appendChild(photoClone);
-        } else {
-          popupPhotoElement.querySelector('.popup__photo').src = map.offer.photos[i];
+      if (map.offer.photos.length === 0) {
+        popupPhotoElement.classList.add('hidden');
+      } else {
+        for (i = 0; i < map.offer.photos.length; i++) {
+          if (i > 0) {
+            var photoClone = cloneCardElement.querySelector('.popup__photo').cloneNode();
+            photoClone.src = map.offer.photos[i];
+            popupPhotoElement.appendChild(photoClone);
+          } else {
+            popupPhotoElement.querySelector('.popup__photo').src = map.offer.photos[i];
+          }
         }
       }
 

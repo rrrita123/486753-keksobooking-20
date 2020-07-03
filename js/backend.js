@@ -1,21 +1,36 @@
 'use strict';
 
 window.backend = (function () {
-  // var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
+  var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
+  var dataRespose = []; // массив для данных от сервера
 
-  // return {
+  // Записывается ответ с сервера в переменную
+  var setDataResponse = function (response) {
+    dataRespose = response;
+  };
 
-  //   // Данные получаются с сервера
-  //   load: function (onLoad) {
-  //     var xhr = new XMLHttpRequest();
-  //     xhr.responseType = 'json';
+  // Получаем переменную с данными от сервера
+  var getDataResponse = function () {
+    return dataRespose;
+  };
 
-  //     xhr.addEventListener('load', function () {
-  //       onLoad(xhr.response);
-  //     });
+  return {
+    setDataResponse: setDataResponse,
+    getDataResponse: getDataResponse,
 
-  //     xhr.open('GET', URL_LOAD);
-  //     xhr.send();
-  //   }
-  // };
+    // Данные получаются с сервера
+    load: function (onLoad) {
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
+
+      xhr.addEventListener('load', function () {
+        onLoad(xhr.response);
+        setDataResponse(xhr.response);
+      });
+
+      xhr.open('GET', URL_LOAD);
+      xhr.send();
+    },
+  };
+
 })();

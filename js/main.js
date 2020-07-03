@@ -40,7 +40,6 @@ window.main = (function () {
     window.form.setStateCollection(fieldsetsAdForm, false);
     window.map.getAddressMarkMain(true);
     window.form.onInputRoomChange();
-    window.map.renderMarks();
-    // window.backend.load(window.map.onSuccess);
+    window.backend.load(window.map.onSuccess);
   };
 })();
