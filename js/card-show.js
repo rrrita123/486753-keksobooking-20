@@ -24,7 +24,7 @@ window.cardShow = (function () {
         return;
       }
 
-      closeCard(); // Закытие карточки
+      closeCard(); // Закрытие карточки
     }
 
     document.querySelector('.map__filters-container').before(window.card.createCard(window.map.offerArr[dataIndex]));
