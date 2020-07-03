@@ -12,6 +12,13 @@ window.map = (function () {
   var mapPinMainElenemt = document.querySelector('.map__pin--main');
   var inputAddressElement = document.querySelector('#address');
 
+  // Запись в input "Адрес" координат главной метки
+  var setAddressMarkMain = function (x, y) {
+    if ((x >= 0 && x <= window.data.widthMapElement) && (y >= window.data.LOCATION_Y_FROM && y <= window.data.LOCATION_Y_TO)) {
+      inputAddressElement.value = x + ', ' + y;
+    }
+  };
+
   return {
 
     // // Отрисовка меток на карте с помощью DocumentFragment
@@ -25,7 +32,6 @@ window.map = (function () {
 
     //   mapPinsElement.appendChild(fragment);
     // },
-
     // Отрисовка меток на карте с помощью DocumentFragment
     renderMarks: function () {
       var fragment = document.createDocumentFragment();
@@ -54,7 +60,7 @@ window.map = (function () {
         markMainY = Math.round(markMainTop + (HEIGHT_MARK_MAIN * 0.5));
       }
 
-      inputAddressElement.value = markMainX + ', ' + markMainY;
+      setAddressMarkMain(markMainX, markMainY);
 
       return {
         x: markMainX,

@@ -32,14 +32,13 @@ window.move = (function () {
         coordsLeftPinX = pinMainElement.offsetLeft - shift.x;
         coordsTopPinY = pinMainElement.offsetTop - shift.y;
 
-        var coordPinX = window.map.getAddressMarkMain(true, coordsLeftPinX, coordsTopPinY).x;
-        var coordPinY = window.map.getAddressMarkMain(true, coordsLeftPinX, coordsTopPinY).y;
+        var coordPin = window.map.getAddressMarkMain(true, coordsLeftPinX, coordsTopPinY);
 
-        if (coordPinY > window.data.LOCATION_Y_FROM && coordPinY < window.data.LOCATION_Y_TO) {
+        if (coordPin.y >= window.data.LOCATION_Y_FROM && coordPin.y <= window.data.LOCATION_Y_TO) {
           pinMainElement.style.top = coordsTopPinY + 'px';
         }
 
-        if (coordPinX > 0 && coordPinX < window.data.widthMapElement) {
+        if (coordPin.x >= 0 && coordPin.x <= window.data.widthMapElement) {
           pinMainElement.style.left = coordsLeftPinX + 'px';
         }
       }
@@ -55,9 +54,5 @@ window.move = (function () {
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-
-    return {
-      onMouseMove: onMouseMove()
-    };
   });
 })();
