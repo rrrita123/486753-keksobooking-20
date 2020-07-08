@@ -5,27 +5,27 @@ window.cardShow = (function () {
 
   // Отслеживает клик по метке, получает ее индекс
   window.map.mapPinsElement.addEventListener('click', function (evt) {
-    if (evt.target.parentElement.classList.contains('map__pin--main')) {
+    var buttonPin;
+    if (evt.target.parentElement.classList.contains('map__pin')) {
+      buttonPin = evt.target.parentElement;
+    } else if (evt.target.classList.contains('map__pin')) {
+      buttonPin = evt.target;
+    } else {
       return;
     }
 
-    if (evt.target.parentElement.classList.contains('map__pin') || (evt.target.classList.contains('map__pin'))) {
-      var dataIndexPin;
-      if (evt.target.getAttribute('data-index')) {
-        setPinActiveClass(evt.target);
-        dataIndexPin = evt.target.getAttribute('data-index');
-      } else {
-        setPinActiveClass(evt.target.parentElement);
-        dataIndexPin = evt.target.parentElement.getAttribute('data-index');
-      }
-      if (dataIndexPin) {
-        openCard(dataIndexPin);
-      }
+    if (buttonPin.getAttribute('data-index')) {
+      setPinActiveClass(buttonPin);
+      openCard(buttonPin.getAttribute('data-index'));
     }
   });
 
   // Добавляется метке класс активности
   var setPinActiveClass = function (element) {
+    if (element.classList.contains('map__pin--active')) {
+      return;
+    }
+
     var PinActiveElement = document.querySelector('.map__pin--active');
     if (PinActiveElement) {
       PinActiveElement.classList.remove('map__pin--active');
@@ -73,9 +73,5 @@ window.cardShow = (function () {
 
       document.removeEventListener('keydown', onCardEscClose);
     }
-  };
-
-  return {
-    closeCard: closeCard
   };
 })();

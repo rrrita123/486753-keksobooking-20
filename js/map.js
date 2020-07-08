@@ -9,10 +9,10 @@ window.map = (function () {
 
   var mapPinsElement = document.querySelector('.map__pins');
   var offerArr = window.data.createArr(8);
-  var mapPinMainElenemt = document.querySelector('.map__pin--main');
+  var mapPinMainElement = document.querySelector('.map__pin--main');
   var inputAddressElement = document.querySelector('#address');
-  var xLeftDefaultPin = parseInt(mapPinMainElenemt.style.left, 10);
-  var yTopDefaultPin = parseInt(mapPinMainElenemt.style.top, 10);
+  var xLeftDefaultPin = parseInt(mapPinMainElement.style.left, 10);
+  var yTopDefaultPin = parseInt(mapPinMainElement.style.top, 10);
 
   // Запись в input "Адрес" координат главной метки
   var setAddressMarkMain = function (x, y) {
@@ -43,8 +43,8 @@ window.map = (function () {
 
     // Получение координат главной метки
     getAddressMarkMain: function (state, x, y) {
-      x = x !== undefined ? x : parseInt(mapPinMainElenemt.style.left, 10);
-      y = y !== undefined ? y : parseInt(mapPinMainElenemt.style.top, 10);
+      x = x !== undefined ? x : parseInt(mapPinMainElement.style.left, 10);
+      y = y !== undefined ? y : parseInt(mapPinMainElement.style.top, 10);
 
       var markMainX;
       var markMainY;
@@ -52,8 +52,8 @@ window.map = (function () {
         markMainX = Math.round(x + (WIDTH_MARK_FIRST * 0.5));
         markMainY = Math.round(y + HEIGHT_MARK_FIRST);
       } else {
-        mapPinMainElenemt.style.left = xLeftDefaultPin + 'px';
-        mapPinMainElenemt.style.top = yTopDefaultPin + 'px';
+        mapPinMainElement.style.left = xLeftDefaultPin + 'px';
+        mapPinMainElement.style.top = yTopDefaultPin + 'px';
 
         markMainX = Math.round(xLeftDefaultPin + (WIDTH_MARK_MAIN * 0.5));
         markMainY = Math.round(yTopDefaultPin + (HEIGHT_MARK_MAIN * 0.5));

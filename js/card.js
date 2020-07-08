@@ -7,7 +7,6 @@ window.card = (function () {
 
   var mapCardElement = document.querySelector('#card').content;
 
-
   return {
     createCard: function (map) {
       var cloneCardElement = mapCardElement.cloneNode(true);
@@ -16,8 +15,8 @@ window.card = (function () {
       cloneCardElement.querySelector('.popup__text--address').textContent = map.offer.address;
       cloneCardElement.querySelector('.popup__text--price').textContent = map.offer.price + '₽/ночь';
       cloneCardElement.querySelector('.popup__type').textContent = TYPES_VALUES[window.data.TYPES_OFFER.indexOf(map.offer.type)];
-      cloneCardElement.querySelector('.popup__text--capacity').textContent = map.offer.rooms + ' комнаты для ' + map.offer.guests + ' гостей';
-      cloneCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + map.offer.checkin + ', выезд до ' + map.offer.checkout;
+      cloneCardElement.querySelector('.popup__text--capacity').textContent = map.offer.rooms && map.offer.guests ? map.offer.rooms + ' комнаты для ' + map.offer.guests + ' гостей' : '';
+      cloneCardElement.querySelector('.popup__text--time').textContent = map.offer.checkin && map.offer.checkout ? 'Заезд после ' + map.offer.checkin + ', выезд до ' + map.offer.checkout : '';
 
       if (map.offer.features.length === 0) {
         cloneCardElement.querySelector('.popup__features').classList.add('hidden');
