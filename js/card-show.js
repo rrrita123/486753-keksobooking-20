@@ -10,11 +10,9 @@ window.cardShow = (function () {
       buttonPin = evt.target.parentElement;
     } else if (evt.target.classList.contains('map__pin')) {
       buttonPin = evt.target;
-    } else {
-      return;
     }
 
-    if (buttonPin.getAttribute('data-index')) {
+    if (buttonPin && buttonPin.getAttribute('data-index')) {
       setPinActiveClass(buttonPin);
       openCard(buttonPin.getAttribute('data-index'));
     }
