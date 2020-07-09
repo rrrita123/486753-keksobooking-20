@@ -2,19 +2,35 @@
 
 // Модуль управления карточки объявления
 window.cardShow = (function () {
+
   // Отслеживает клик по метке, получает ее индекс
   window.map.mapPinsElement.addEventListener('click', function (evt) {
-    if (evt.target.parentElement.classList.contains('map__pin--main')) {
+    var buttonPin;
+    if (evt.target.parentElement.classList.contains('map__pin')) {
+      buttonPin = evt.target.parentElement;
+    } else if (evt.target.classList.contains('map__pin')) {
+      buttonPin = evt.target;
+    }
+
+    if (buttonPin && buttonPin.getAttribute('data-index')) {
+      setPinActiveClass(buttonPin);
+      openCard(buttonPin.getAttribute('data-index'));
+    }
+  });
+
+  // Добавляется метке класс активности
+  var setPinActiveClass = function (element) {
+    if (element.classList.contains('map__pin--active')) {
       return;
     }
 
-    if (evt.target.parentElement.classList.contains('map__pin') || (evt.target.classList.contains('map__pin'))) {
-      var dataIndexPin = (evt.target.parentElement.getAttribute('data-index')) || (evt.target.getAttribute('data-index'));
-      if (dataIndexPin) {
-        openCard(dataIndexPin);
-      }
+    var PinActiveElement = document.querySelector('.map__pin--active');
+    if (PinActiveElement) {
+      PinActiveElement.classList.remove('map__pin--active');
     }
-  });
+
+    element.classList.add('map__pin--active');
+  };
 
   // Выводит карточку с данными одного предложения
   var openCard = function (dataIndex) {
@@ -27,7 +43,8 @@ window.cardShow = (function () {
       closeCard(); // Закрытие карточки
     }
 
-    document.querySelector('.map__filters-container').before(window.card.createCard(window.map.offerArr[dataIndex]));
+    var offerArr = window.backend.getDataResponse();
+    document.querySelector('.map__filters-container').before(window.card.createCard(offerArr[dataIndex]));
     mapCardElement = document.querySelector('.map__card');
     mapCardElement.setAttribute('data-index', dataIndex);
 
@@ -49,8 +66,10 @@ window.cardShow = (function () {
   // Закрывает карточку
   var closeCard = function () {
     var mapCardElement = document.querySelector('.map__card');
-    document.querySelector('.map').removeChild(mapCardElement);
+    if (mapCardElement) {
+      document.querySelector('.map').removeChild(mapCardElement);
 
-    document.removeEventListener('keydown', onCardEscClose);
+      document.removeEventListener('keydown', onCardEscClose);
+    }
   };
 })();
