@@ -36,11 +36,16 @@ window.form = (function () {
   var typeRoomElement = document.querySelector('#type');
   var inputPriceElement = document.querySelector('#price');
 
+  // Функция устанавливает в input "цена" атрибуты min цены за жилье и соответствующий placeholder
+  var setTypeRoomValue = function (element, indexName) {
+    element.setAttribute('min', priceTypeOffer[indexName]);
+    element.setAttribute('placeholder', priceTypeOffer[indexName]);
+  };
+
   // Обработчик определяет минимальную цену за жилье
   var onInputTypeRoomChange = function (evt) {
     var nameType = evt.target.value;
-    inputPriceElement.setAttribute('min', priceTypeOffer[nameType]);
-    inputPriceElement.setAttribute('placeholder', priceTypeOffer[nameType]);
+    setTypeRoomValue(inputPriceElement, nameType);
   };
 
   typeRoomElement.addEventListener('change', onInputTypeRoomChange);
@@ -63,8 +68,29 @@ window.form = (function () {
 
   timeElement.addEventListener('change', onInputTimeInChange);
 
+  // Очистка полей формы, все заполненные поля возвращаются в изначальное состояние, в том числе фильтры
+  var formsReset = function () {
+    var formsElements = document.querySelectorAll('form');
+
+    formsElements.forEach(function (form) {
+      form.reset();
+    });
+  };
+
+  var buttonResetElement = document.querySelector('.ad-form__reset');
+
+  // Обработичик очистки формы по клику на кнопку "очистить"
+  var onformReset = function () {
+    window.main.setRepeatInactiveState();
+  };
+
+  buttonResetElement.addEventListener('click', onformReset);
+
+
   return {
     onInputRoomChange: onInputRoomChange,
+    setTypeRoomValue: setTypeRoomValue,
+    formsReset: formsReset,
 
     // Блокирует или разблокирует элементы формы
     setStateCollection: function (collection, state) {

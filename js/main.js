@@ -28,9 +28,24 @@ window.main = (function () {
     window.form.onInputRoomChange();
   };
 
+  // Функция устанавливает повторное неактивное состояние после отправки формы
+  var setRepeatInactiveState = function () {
+    window.form.formsReset();
+    setInactiveState();
+    window.cardShow.closeCard();
+    document.querySelector('.map').classList.add('map--faded');
+    window.map.removePins();
+    document.querySelector('.ad-form').classList.add('ad-form--disabled');
+
+    mapPinActive.addEventListener('mousedown', onMouseClick);
+  };
+
   setInactiveState();
 
   mapPinActive.addEventListener('mousedown', onMouseClick);
+
+  var inputPriceElement = document.querySelector('#price');
+  var valueTypeRoomElement = document.querySelector('#type').value;
 
   // Устанавливает активное состояние страницы
   var setActiveState = function () {
@@ -40,6 +55,11 @@ window.main = (function () {
     window.form.setStateCollection(fieldsetsAdForm, false);
     window.map.getAddressMarkMain(true);
     window.form.onInputRoomChange();
+    window.form.setTypeRoomValue(inputPriceElement, valueTypeRoomElement);
     window.backend.load(window.map.onSuccess);
+  };
+
+  return {
+    setRepeatInactiveState: setRepeatInactiveState
   };
 })();
