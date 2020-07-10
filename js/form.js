@@ -34,18 +34,18 @@ window.form = (function () {
   roomNumberElement.addEventListener('change', onInputRoomChange);
 
   var typeRoomElement = document.querySelector('#type');
-  var inputPriceElement = document.querySelector('#price');
 
   // Функция устанавливает в input "цена" атрибуты min цены за жилье и соответствующий placeholder
-  var setTypeRoomValue = function (element, indexName) {
-    element.setAttribute('min', priceTypeOffer[indexName]);
-    element.setAttribute('placeholder', priceTypeOffer[indexName]);
+  var setTypeRoomValue = function (indexName) {
+    var inputPriceElement = document.querySelector('#price');
+    inputPriceElement.setAttribute('min', priceTypeOffer[indexName]);
+    inputPriceElement.setAttribute('placeholder', priceTypeOffer[indexName]);
   };
 
   // Обработчик определяет минимальную цену за жилье
   var onInputTypeRoomChange = function (evt) {
     var nameType = evt.target.value;
-    setTypeRoomValue(inputPriceElement, nameType);
+    setTypeRoomValue(nameType);
   };
 
   typeRoomElement.addEventListener('change', onInputTypeRoomChange);
@@ -85,7 +85,6 @@ window.form = (function () {
   };
 
   buttonResetElement.addEventListener('click', onformReset);
-
 
   return {
     onInputRoomChange: onInputRoomChange,

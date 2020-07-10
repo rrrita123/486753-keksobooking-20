@@ -17,8 +17,8 @@ window.formSubmit = (function () {
   // Отправка данных формы с на сервер с помощью AJAX
   // После успешной передачи данных страница переходит в неактивное состояние
   var onSubmit = function (evt) {
-    window.backend.save(new FormData(formElement), onSuccess, onError);
     evt.preventDefault();
+    window.backend.save(new FormData(formElement), onSuccess, onError);
   };
 
   formElement.addEventListener('submit', onSubmit);

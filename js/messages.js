@@ -11,9 +11,9 @@ window.messages = (function () {
     cloneError.querySelector('.error__message').innerHTML = 'Ошибка загрузки объявления' + '<br>' + message;
 
     mainElement.appendChild(cloneError);
+    document.querySelector('.error').classList.add('message');
 
-    document.addEventListener('keydown', onMessageEscClose);
-    document.addEventListener('click', onMessageClose);
+    messageControllerEvent('add');
   };
 
   // Функция вывода сообщения об успешной отправки
@@ -22,15 +22,27 @@ window.messages = (function () {
 
     var cloneSuccess = successTemplateElement.cloneNode(true);
     mainElement.appendChild(cloneSuccess);
+    document.querySelector('.success').classList.add('message');
 
-    document.addEventListener('keydown', onMessageEscClose);
-    document.addEventListener('click', onMessageClose);
+    messageControllerEvent('add');
   };
 
   // Обработчик закрытия сообщения на click
   var onMessageClose = function (evt) {
-    if (evt.target.classList.contains('error') || evt.target.classList.contains('error__button') || evt.target.classList.contains('success')) {
+    if (evt.target.classList.contains('message') || evt.target.classList.contains('error__button')) {
       closeMessage();
+    }
+  };
+
+  // Функция добавляет/удаляет отбаротчики событий
+  var messageControllerEvent = function (parameter) {
+    var messageElement = document.querySelector('.message');
+    if (parameter === 'add') {
+      document.addEventListener('keydown', onMessageEscClose);
+      messageElement.addEventListener('click', onMessageClose);
+    } else {
+      document.removeEventListener('keydown', onMessageEscClose);
+      messageElement.removeEventListener('click', onMessageClose);
     }
   };
 
@@ -41,22 +53,12 @@ window.messages = (function () {
 
   // Функция закрытия сообщения
   var closeMessage = function () {
-    var errorElement = document.querySelector('.error');
-    var succesElement = document.querySelector('.success');
-
-    if (errorElement) {
-      errorElement.remove();
-    } else if (succesElement) {
-      succesElement.remove();
-    }
-
-    document.removeEventListener('keydown', onMessageEscClose);
-    document.removeEventListener('click', onMessageClose);
+    messageControllerEvent('remove');
+    document.querySelector('.message').remove();
   };
 
   return {
     onError: onError,
     onSuccess: onSuccess
-
   };
 })();

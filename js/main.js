@@ -44,7 +44,6 @@ window.main = (function () {
 
   mapPinActive.addEventListener('mousedown', onMouseClick);
 
-  var inputPriceElement = document.querySelector('#price');
   var valueTypeRoomElement = document.querySelector('#type').value;
 
   // Устанавливает активное состояние страницы
@@ -55,7 +54,7 @@ window.main = (function () {
     window.form.setStateCollection(fieldsetsAdForm, false);
     window.map.getAddressMarkMain(true);
     window.form.onInputRoomChange();
-    window.form.setTypeRoomValue(inputPriceElement, valueTypeRoomElement);
+    window.form.setTypeRoomValue(valueTypeRoomElement);
     window.backend.load(window.map.onSuccess);
   };
 
