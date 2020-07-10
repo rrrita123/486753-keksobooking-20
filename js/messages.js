@@ -13,7 +13,7 @@ window.messages = (function () {
     mainElement.appendChild(cloneError);
     document.querySelector('.error').classList.add('message');
 
-    messageControllerEvent('add');
+    messageAddEvent();
   };
 
   // Функция вывода сообщения об успешной отправки
@@ -24,7 +24,7 @@ window.messages = (function () {
     mainElement.appendChild(cloneSuccess);
     document.querySelector('.success').classList.add('message');
 
-    messageControllerEvent('add');
+    messageAddEvent();
   };
 
   // Обработчик закрытия сообщения на click
@@ -34,16 +34,19 @@ window.messages = (function () {
     }
   };
 
-  // Функция добавляет/удаляет отбаротчики событий
-  var messageControllerEvent = function (parameter) {
-    var messageElement = document.querySelector('.message');
-    if (parameter === 'add') {
-      document.addEventListener('keydown', onMessageEscClose);
-      messageElement.addEventListener('click', onMessageClose);
-    } else {
-      document.removeEventListener('keydown', onMessageEscClose);
-      messageElement.removeEventListener('click', onMessageClose);
-    }
+  var messageElement;
+
+  // Функция добавляет обработчик событий
+  var messageAddEvent = function () {
+    messageElement = document.querySelector('.message');
+    document.addEventListener('keydown', onMessageEscClose);
+    messageElement.addEventListener('click', onMessageClose);
+  };
+
+  // Функция удаляет обработчик событий
+  var messageRemoveEvent = function () {
+    document.removeEventListener('keydown', onMessageEscClose);
+    messageElement.removeEventListener('click', onMessageClose);
   };
 
   // Обработчик закрытия сообщения на ESC
@@ -53,8 +56,8 @@ window.messages = (function () {
 
   // Функция закрытия сообщения
   var closeMessage = function () {
-    messageControllerEvent('remove');
-    document.querySelector('.message').remove();
+    messageElement.remove();
+    messageRemoveEvent();
   };
 
   return {
