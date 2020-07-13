@@ -72,4 +72,8 @@ window.cardShow = (function () {
       document.removeEventListener('keydown', onCardEscClose);
     }
   };
+
+  return {
+    closeCard: closeCard
+  };
 })();

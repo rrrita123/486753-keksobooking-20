@@ -41,6 +41,14 @@ window.map = (function () {
       renderMarks(pins);
     },
 
+    // Удаление меток
+    removePins: function () {
+      var mapPinsCollectionElements = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+      mapPinsCollectionElements.forEach(function (pins) {
+        pins.remove();
+      });
+    },
+
     // Получение координат главной метки
     getAddressMarkMain: function (state, x, y) {
       x = x !== undefined ? x : parseInt(mapPinMainElement.style.left, 10);
