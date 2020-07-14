@@ -50,7 +50,6 @@ window.main = (function () {
   var setActiveState = function () {
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
-    window.form.setStateCollection(selectsMapFilter, false);
     window.form.setStateCollection(fieldsetsAdForm, false);
     window.map.getAddressMarkMain(true);
     window.form.onInputRoomChange();

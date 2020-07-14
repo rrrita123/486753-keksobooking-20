@@ -43,7 +43,7 @@ window.cardShow = (function () {
       closeCard(); // Закрытие карточки
     }
 
-    var offerArr = window.backend.getDataResponse();
+    var offerArr = window.filter.getPinArray() || window.backend.getDataResponse();
     document.querySelector('.map__filters-container').before(window.card.createCard(offerArr[dataIndex]));
     mapCardElement = document.querySelector('.map__card');
     mapCardElement.setAttribute('data-index', dataIndex);
