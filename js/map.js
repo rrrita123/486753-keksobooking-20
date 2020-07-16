@@ -24,6 +24,7 @@ window.map = (function () {
   // Отрисовка меток на карте с помощью DocumentFragment
   var renderMarks = function (pins) {
     var fragment = document.createDocumentFragment();
+    pins = pins.slice(0, 5); // Выводить на карту не более 5 меток
 
     for (var i = 0; i < pins.length; i++) {
       if (pins[i].offer) {
@@ -32,13 +33,17 @@ window.map = (function () {
     }
 
     mapPinsElement.appendChild(fragment);
+
   };
+
+  var selectsMapFilter = document.querySelectorAll('.map__filters select, .map__filters fieldset');
 
   return {
 
     // Функция обработчик успешной загрузки
     onSuccess: function (pins) {
       renderMarks(pins);
+      window.form.setStateCollection(selectsMapFilter, false);
     },
 
     // Удаление меток
@@ -76,7 +81,7 @@ window.map = (function () {
     },
 
     offerArr: offerArr,
-    mapPinsElement: mapPinsElement
-
+    mapPinsElement: mapPinsElement,
+    renderMarks: renderMarks
   };
 })();

@@ -71,7 +71,7 @@ window.form = (function () {
   // Очистка полей формы, все заполненные поля возвращаются в изначальное состояние, в том числе фильтры
   var formsReset = function () {
     var formsElements = document.querySelectorAll('form');
-
+    window.filter.updatePin('any');
     formsElements.forEach(function (form) {
       form.reset();
     });
