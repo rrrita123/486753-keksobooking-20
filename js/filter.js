@@ -55,12 +55,8 @@ window.filter = (function () {
     var isFiltered = false;
 
     if (filterFeatures.length > 0) {
-      filterFeatures.forEach(function (element) {
-        if (valueFeatures.indexOf(element.value) >= 0) {
-          isFiltered = true;
-        } else {
-          isFiltered = false;
-        }
+      isFiltered = Array.from(filterFeatures).every(function (element) {
+        return valueFeatures.includes(element.value);
       });
     } else {
       isFiltered = true;
@@ -73,7 +69,11 @@ window.filter = (function () {
   var onFilterChange = window.util.debounce(function () {
     pins = window.backend.getDataResponse();
 
-    filteredPins = pins.filter(onTypeFilter).filter(onPriceFilter).filter(onRoomsFilter).filter(onGuestFilter).filter(onFeaturesFilter);
+    filteredPins = pins.filter(onTypeFilter)
+                        .filter(onPriceFilter)
+                        .filter(onRoomsFilter)
+                        .filter(onGuestFilter)
+                        .filter(onFeaturesFilter);
 
     window.cardShow.closeCard();
     window.map.removePins();
