@@ -2,7 +2,11 @@
 
 // Модуль перемещения главной метки
 window.move = (function () {
+  var LOCATION_Y_FROM = 130;
+  var LOCATION_Y_TO = 630;
+
   var pinMainElement = document.querySelector('.map__pin--main');
+  var widthMapElement = document.querySelector('.map').offsetWidth;
 
   pinMainElement.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -34,11 +38,11 @@ window.move = (function () {
 
         var coordPin = window.map.getAddressMarkMain(true, coordsLeftPinX, coordsTopPinY);
 
-        if (coordPin.y >= window.data.LOCATION_Y_FROM && coordPin.y <= window.data.LOCATION_Y_TO) {
+        if (coordPin.y >= LOCATION_Y_FROM && coordPin.y <= LOCATION_Y_TO) {
           pinMainElement.style.top = coordsTopPinY + 'px';
         }
 
-        if (coordPin.x >= 0 && coordPin.x <= window.data.widthMapElement) {
+        if (coordPin.x >= 0 && coordPin.x <= widthMapElement) {
           pinMainElement.style.left = coordsLeftPinX + 'px';
         }
       }

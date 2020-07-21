@@ -6,17 +6,20 @@ window.map = (function () {
   var HEIGHT_MARK_MAIN = 65;
   var WIDTH_MARK_FIRST = 65;
   var HEIGHT_MARK_FIRST = 80;
+  var LOCATION_Y_FROM = 130;
+  var LOCATION_Y_TO = 630;
+  var PIN_LIMIT = 5;
 
   var mapPinsElement = document.querySelector('.map__pins');
-  var offerArr = window.data.createArr(8);
   var mapPinMainElement = document.querySelector('.map__pin--main');
   var inputAddressElement = document.querySelector('#address');
   var xLeftDefaultPin = parseInt(mapPinMainElement.style.left, 10);
   var yTopDefaultPin = parseInt(mapPinMainElement.style.top, 10);
+  var widthMapElement = document.querySelector('.map').offsetWidth;
 
   // Запись в input "Адрес" координат главной метки
   var setAddressMarkMain = function (x, y) {
-    if ((x >= 0 && x <= window.data.widthMapElement) && (y >= window.data.LOCATION_Y_FROM && y <= window.data.LOCATION_Y_TO)) {
+    if ((x >= 0 && x <= widthMapElement) && (y >= LOCATION_Y_FROM && y <= LOCATION_Y_TO)) {
       inputAddressElement.value = x + ', ' + y;
     }
   };
@@ -24,7 +27,7 @@ window.map = (function () {
   // Отрисовка меток на карте с помощью DocumentFragment
   var renderMarks = function (pins) {
     var fragment = document.createDocumentFragment();
-    pins = pins.slice(0, 5); // Выводить на карту не более 5 меток
+    pins = pins.slice(0, PIN_LIMIT); // Выводить на карту не более 5 меток
 
     for (var i = 0; i < pins.length; i++) {
       if (pins[i].offer) {
@@ -39,10 +42,10 @@ window.map = (function () {
   var selectsMapFilter = document.querySelectorAll('.map__filters select, .map__filters fieldset');
 
   return {
-
     // Функция обработчик успешной загрузки
     onSuccess: function (pins) {
       renderMarks(pins);
+      window.filter.activateFilter();
       window.form.setStateCollection(selectsMapFilter, false);
     },
 
@@ -80,7 +83,6 @@ window.map = (function () {
       };
     },
 
-    offerArr: offerArr,
     mapPinsElement: mapPinsElement,
     renderMarks: renderMarks
   };

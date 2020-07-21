@@ -2,12 +2,14 @@
 
 // Модуль работает с формой объявления
 window.form = (function () {
+  var TIMES_CHECKIN = ['12:00', '13:00', '14:00'];
+  var TIMES_CHECKOUT = ['12:00', '13:00', '14:00'];
 
-  var priceTypeOffer = {
-    bungalo: '0',
-    flat: '1000',
-    house: '5000',
-    palace: '10000'
+  var PriceTypeOffer = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
   };
 
   var capacityElement = document.querySelector('#capacity');
@@ -38,8 +40,8 @@ window.form = (function () {
   // Функция устанавливает в input "цена" атрибуты min цены за жилье и соответствующий placeholder
   var setTypeRoomValue = function (indexName) {
     var inputPriceElement = document.querySelector('#price');
-    inputPriceElement.setAttribute('min', priceTypeOffer[indexName]);
-    inputPriceElement.setAttribute('placeholder', priceTypeOffer[indexName]);
+    inputPriceElement.setAttribute('min', PriceTypeOffer[indexName.toUpperCase()]);
+    inputPriceElement.setAttribute('placeholder', PriceTypeOffer[indexName.toUpperCase()]);
   };
 
   // Обработчик определяет минимальную цену за жилье
@@ -58,11 +60,11 @@ window.form = (function () {
   var onInputTimeInChange = function (evt) {
     var indexTime;
     if (evt.target.getAttribute('id') === 'timein') {
-      indexTime = window.data.TIMES_CHECKIN.indexOf(evt.target.value);
-      timeOutElement.value = window.data.TIMES_CHECKOUT[indexTime];
+      indexTime = TIMES_CHECKIN.indexOf(evt.target.value);
+      timeOutElement.value = TIMES_CHECKOUT[indexTime];
     } else {
-      indexTime = window.data.TIMES_CHECKOUT.indexOf(evt.target.value);
-      timeInElement.value = window.data.TIMES_CHECKIN[indexTime];
+      indexTime = TIMES_CHECKOUT.indexOf(evt.target.value);
+      timeInElement.value = TIMES_CHECKIN[indexTime];
     }
   };
 
@@ -71,7 +73,6 @@ window.form = (function () {
   // Очистка полей формы, все заполненные поля возвращаются в изначальное состояние, в том числе фильтры
   var formsReset = function () {
     var formsElements = document.querySelectorAll('form');
-    window.filter.updatePin('any');
     formsElements.forEach(function (form) {
       form.reset();
     });

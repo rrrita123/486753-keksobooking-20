@@ -36,6 +36,7 @@ window.main = (function () {
     document.querySelector('.map').classList.add('map--faded');
     window.map.removePins();
     document.querySelector('.ad-form').classList.add('ad-form--disabled');
+    window.filter.deactivateFilter();
 
     mapPinActive.addEventListener('mousedown', onMouseClick);
   };
