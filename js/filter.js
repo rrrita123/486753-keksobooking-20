@@ -67,8 +67,6 @@ window.filter = (function () {
 
   // Функция обработчик собирает цепочки фильтров
   var onFilterChange = window.util.debounce(function () {
-    pins = window.backend.getDataResponse();
-
     filteredPins = pins.filter(onTypeFilter)
                         .filter(onPriceFilter)
                         .filter(onRoomsFilter)
@@ -80,7 +78,9 @@ window.filter = (function () {
     window.map.renderMarks(filteredPins);
   }, 500);
 
-  var activateFilter = function () {
+  var activateFilter = function (pinsArray) {
+    filteredPins = pinsArray;
+    pins = pinsArray;
     mapFilterElement.addEventListener('change', onFilterChange);
   };
 

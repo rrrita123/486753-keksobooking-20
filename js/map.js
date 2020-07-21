@@ -45,7 +45,7 @@ window.map = (function () {
     // Функция обработчик успешной загрузки
     onSuccess: function (pins) {
       renderMarks(pins);
-      window.filter.activateFilter();
+      window.filter.activateFilter(pins);
       window.form.setStateCollection(selectsMapFilter, false);
     },
 

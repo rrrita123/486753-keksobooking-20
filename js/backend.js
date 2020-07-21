@@ -63,5 +63,4 @@ window.backend = (function () {
       xhr.send(data);
     }
   };
-
 })();
